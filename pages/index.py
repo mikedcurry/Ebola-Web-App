@@ -4,8 +4,13 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.express as px
+import dash_html_components as html
 
 from app import app
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
 
 """
 https://dash-bootstrap-components.opensource.faculty.ai/l/components/layout
@@ -29,13 +34,12 @@ column1 = dbc.Col(
         dcc.Markdown(
             """
         
-            ## Value Proposition
+                ## Ebola TITLE Ebola
+                
+                sdgsda
+                sdg
+                sadg wadg
 
-            Emphasize how the app will benefit users. Don't emphasize the underlying technology.
-
-            ✅ RUN is a running app that adapts to your fitness levels and designs personalized workouts to help you improve your running.
-
-            ❌ RUN is the only intelligent running app that uses sophisticated deep neural net machine learning to make your run smarter because we believe in ML driven workouts.
 
             """
         ),
@@ -44,14 +48,58 @@ column1 = dbc.Col(
     md=4,
 )
 
-gapminder = px.data.gapminder()
-fig = px.scatter(gapminder.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent",
-           hover_name="country", log_x=True, size_max=60)
+
+# Example:
+# gapminder = px.data.gapminder()
+# fig = px.scatter(gapminder.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent",
+#            hover_name="country", log_x=True, size_max=60)
+
+# read csv
+df = pd.read_csv('https://data.humdata.org/dataset/9e3665cb-e4a3-4749-9622-f5c8146542c3/resource/c99f90a6-8a3b-4bd0-a081-3bed5d70781f/download/redcross_westafrica_rapidassessment_survey.csv')
+
+# 3-way split: 60-20-20
+train1, test = train_test_split(df, train_size=0.80, test_size=0.20, 
+                               random_state=42) #stratify=df['ebola'],
+
+train, val = train_test_split(train1, train_size=0.75, test_size=0.25, 
+                              random_state=42) #stratify=df['ebola'],
+
+
+
+# A place to clean data...
+def wrangle(X):
+    # Wrangle train/val/test sets in the same way
+    
+    # Prevent SettingWithCopyWarning
+    X = X.copy()
+    
+    # Imputes single 9999995 value, change target to catagory
+    X['commebola'] = X.commebola.replace(999995, 0)
+    X['commebola'] = X['commebola'].astype('category')
+    
+    # Drop unhelpful or data leaking features
+    droprs = ['ebola', 'relgo', 'religiousmatch'] # 'comm_dist' ?
+    X = X.drop(columns=droprs)
+    
+    # return the wrangled dataframe
+    return X
+
+df = wrangle(df)
+
+fig = px.scatter_mapbox(df, 
+                        lat='hh_gps.latitude', lon='hh_gps.longitude', 
+                        color='commebola', opacity=.9)
+
+fig.update_layout(mapbox_style='stamen-terrain')
+
+
 
 column2 = dbc.Col(
     [
         dcc.Graph(figure=fig),
     ]
 )
+
+
 
 layout = dbc.Row([column1, column2])

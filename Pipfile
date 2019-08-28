@@ -6,12 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-dash = "*"
-dash-bootstrap-components = "*"
-gunicorn = "*"
-plotly = "*"
-jupyter = "*"
-pandas = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.7"
