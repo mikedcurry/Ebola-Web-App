@@ -294,6 +294,7 @@ column3 = dbc.Col(
         # html.Div(id='shapley_values', className='lead' 
         # ),
     ],
+    md=9,
 )
 
 

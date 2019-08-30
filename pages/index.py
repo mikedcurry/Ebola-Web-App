@@ -34,18 +34,41 @@ column1 = dbc.Col(
         dcc.Markdown(
             """
         
-                ## Ebola TITLE Ebola
+                ## Community Risk Factos of Ebola
                 
-                sdgsda
-                sdg
-                sadg wadg
+                Towards the end of the 2014-16 Ebola outbreak in West Africa 
+                the American Red Cross together with its local partners 
+                extensively surveyed communities within a 15-kilometer distance 
+                of the shared borders between Guinea, Liberia, and Sierra Leone. The 
+                information from this survey continues to serve as a fireline for 
+                containment of the infection. 
 
+                The maps below give an overview of the 7,200 communities surveyed. In
+                the first map, each dot represents a community, with red
+                representing a community that reported at least one case of Ebola during 
+                the outbreak. 
+
+                Click on the dropdown menu to see more detailed maps of infection severity. 
 
             """
         ),
-        dcc.Link(dbc.Button('Call To Action', color='primary'), href='/predictions')
+        dcc.Markdown('#### Select a map in the dropdown below'
+        ),
+        dcc.Dropdown(
+            id='community', 
+            options = [
+                {'label': 'Survey Overview', 'value': 1}, #'fig1'}, 
+                {'label': 'Infected Community', 'value': 2}, #'fig2'}, 
+                {'label': 'Infection Severity', 'value': 3}, #'fig3'}, 
+                # {'label': 'Europe', 'value': 'Europe'}, 
+                # {'label': 'Oceania', 'value': 'Oceania'}, 
+            ], 
+            value = 1, 
+            className='mb-5',
+        ),
+
     ],
-    md=4,
+    md=9,
 )
 
 
@@ -97,9 +120,39 @@ fig.update_layout(mapbox_style='stamen-terrain')
 column2 = dbc.Col(
     [
         dcc.Graph(figure=fig),
-    ]
+        dcc.Link(dbc.Button('Ebola Risk Factors', color='primary'), href='/factors'
+        ),
+        dcc.Markdown(
+            """
+        
+            ### Project Overview
+
+            The goal of this project was use the information from the survey
+            to create a predictive model for Ebola infection. Using supervised 
+            machine-learning techniques it is possible to determine the probability
+            that a given community is at risk of infection. By adjusting the risk
+            probability threshold, which communities to concentrate containment efforts
+            can be identified.
+
+            In addition to having a predictive framework for this particular region,
+            it is possible to assess which of the factors observed are most predicitive 
+            of Ebola infection for current and future containment efforts. 
+
+
+            """
+        ),
+    ],
+    md=9,
 )
 
 
 
-layout = dbc.Row([column1, column2])
+layout = html.Div(
+    [
+            dbc.Row([column1]
+            ),
+            dbc.Row([column2]
+            ),
+            
+    ],
+)
