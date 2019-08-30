@@ -1,5 +1,5 @@
 # dash-template
-HErrO? isa this working...??? 
+Finally found the right folder!!!
 
 - [First time](#first-time)
   - [Requirements](#requirements)
