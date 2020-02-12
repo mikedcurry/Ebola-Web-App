@@ -6,17 +6,17 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-import category_encoders as ce
-from sklearn.impute import SimpleImputer
-from sklearn.pipeline import make_pipeline
-import seaborn as sns
-import matplotlib.pyplot as plt
-from xgboost import XGBClassifier
-import shap
-import plotly.express as px
+# import pandas as pd
+# import numpy as np
+# from sklearn.model_selection import train_test_split
+# import category_encoders as ce
+# from sklearn.impute import SimpleImputer
+# from sklearn.pipeline import make_pipeline
+# import seaborn as sns
+# import matplotlib.pyplot as plt
+# from xgboost import XGBClassifier
+# import shap
+# import plotly.express as px
 
 from app import app
 
