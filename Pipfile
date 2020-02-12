@@ -14,6 +14,7 @@ plotly-express = "*"
 sklearn = "*"
 category-encoders = "*"
 seaborn = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
